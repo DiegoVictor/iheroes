@@ -7,7 +7,7 @@ class DefeatedController {
     const monster = await Monster.findById(id);
 
     if (!monster) {
-      return res.status(404).son({
+      return res.status(404).json({
         error: {
           message: 'Monster not found',
         },
@@ -19,18 +19,27 @@ class DefeatedController {
       heroes.push(Hero.findById(_id));
     });
 
-    try {
-      const result = await Promise.all(heroes);
-      result.forEach(async hero => {
+    let found_all_heroes = true;
+
+    const result = await Promise.all(heroes);
+    result.every(async hero => {
+      if (hero) {
         hero.status = req.body.heroes.find(
           h => h._id === hero._id.toString()
         ).status;
         await hero.save();
-      });
-    } catch (err) {
+        monster.heroes.push(hero._id);
+        return true;
+      }
+
+      found_all_heroes = false;
+      return false;
+    });
+
+    if (!found_all_heroes) {
       return res.status(400).json({
         error: {
-          message: `Hero ${err.value} not found`,
+          message: `Hero not found`,
         },
       });
     }
@@ -38,7 +47,7 @@ class DefeatedController {
     monster.status = 'defeated';
     await monster.save();
 
-    return res.json({});
+    return res.json(monster);
   }
 }
 
