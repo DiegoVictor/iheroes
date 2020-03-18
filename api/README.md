@@ -23,3 +23,8 @@ Rename the `.env.example` to `.env` then just update with yours settings.
 ```
 $ yarn dev
 ```
+
+# Tests
+```
+$ yarn test
+```
