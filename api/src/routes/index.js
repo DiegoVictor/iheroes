@@ -7,8 +7,8 @@ import HeroController from '../app/controllers/HeroController';
 import MonsterController from '../app/controllers/MonsterController';
 import DefeatedController from '../app/controllers/DefeatedController';
 
-import HeroStore from '../app/validator/Heroes/Store';
-import HeroUpdate from '../app/validator/Heroes/Update';
+import HeroStore from '../app/validators/Heroes/Store';
+import HeroUpdate from '../app/validators/Heroes/Update';
 
 const Route = Router();
 
